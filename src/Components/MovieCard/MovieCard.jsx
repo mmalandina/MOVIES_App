@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { Rate } from 'antd';
 import TrimText from '../../Services/TrimText';
-import TrimmedTitle from '../../services/TrimmedTitle';
+import TrimmedTitle from '../../Services/TrimmedTitle';
 import './MovieCard.css';
 
 export default class MovieCard extends Component {
