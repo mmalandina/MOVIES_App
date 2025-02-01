@@ -1,0 +1,19 @@
+.movies-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: 938px;
+  margin: 0 auto;
+}
+
+.pagination {
+  margin: 36px 36px 36px auto;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .movies-list {
+    margin-left: 0;
+  }
+}

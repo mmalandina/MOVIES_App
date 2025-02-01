@@ -1,0 +1,24 @@
+{
+  "extends": ["airbnb", "airbnb/hooks", "prettier"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["react", "jsx-a11y", "react-hooks", "prettier"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js"] }],
+    "import/no-unresolved": "off",
+    "react/prop-types": "off",
+    "no-console": "warn",
+    "react/react-in-jsx-scope": "off"
+  }
+}

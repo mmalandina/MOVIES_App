@@ -1,0 +1,28 @@
+* {
+  background-color: white;
+  padding: 0;
+}
+
+.appLayout {
+  padding: 0 16px;
+  width: 90%;
+  text-align: center;
+  background-color: white;
+  @media (min-width: 768px) {
+    margin: 0 36px;
+  }
+}
+
+.spin {
+  position: fixed;
+  bottom: 50%;
+  left: 50%;
+  margin: 0;
+  z-index: 2;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}

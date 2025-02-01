@@ -1,0 +1,153 @@
+.movieCard {
+  display: flex;
+  position: relative;
+  width: 451px;
+  height: 279px;
+  margin: 28px 0 auto;
+  box-shadow: 0px 4px 12px 0px #00000026;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.movieImg {
+  width: 183px;
+  height: 100%;
+  margin-right: 20px;
+}
+
+.movieCardContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.movieTitle {
+  width: 190px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.releaseDate {
+  margin-top: 7px;
+  font-size: 12px;
+  color: #827E7E;
+  line-height: 22px;
+}
+
+.genresList {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-top: 9px;
+}
+
+.genresList__item {
+  font-size: 12px;
+  list-style: none;
+  margin-right: 10px;
+  color: rgba(0, 0, 0, 0.65);    
+  border: 1px solid #D9D9D9;
+  border-radius: 2px;
+  background: #FAFAFA;
+  padding: 2px 3px 3px 5px;
+  margin-bottom: 7px;
+}
+
+.description {    
+  max-width: 228px;
+  max-height: 129px;
+  font-size: 12px;
+  line-height: 22px;
+  margin: 0;
+}
+
+.ant-rate {
+  display: flex;
+  align-items: center;
+  width: 239px;
+  height: 46px;
+  margin: auto 0 0 0px;
+}
+
+.ant-rate-star {
+  margin-inline-end: 3px !important;
+}
+
+.ant-rate-star:not(.ant-rate-star-full) .ant-rate-star-second {
+  color: #9c97975e;
+}
+
+.ratingCircle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.very-low {
+  border: 3px solid #E90000;
+}
+
+.low {
+  border: 3px solid #E97E00;
+}
+
+.mid {
+  border: 3px solid #E9D100;
+}
+
+.high {
+  border: 3px solid #66E900;
+}
+
+@media (max-width: 768px) {
+  .movieCard {
+      width: 388px;
+      padding: 10px;
+      height: 245px;
+      margin: 0 auto;
+      margin-bottom: 24px;
+  }
+
+  .movieCardContent {
+    display: flex;
+}
+
+  .movieImg {
+      width: 60px;
+      height: 91px;
+      float: left;
+  }
+
+  .movieTitle {        
+      display: inline-block;
+      width: 250px;
+  }
+
+  .releaseDate {
+      display: block;
+  }
+
+  .description {
+      max-width: 367px;
+      max-height: 92px;
+      position: absolute;
+      left: 0;
+      top: 135px;
+      margin-left: 10px;
+      margin-right: 10px;
+  }
+
+  .ant-rate {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+  }
+}
