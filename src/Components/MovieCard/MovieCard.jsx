@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { Rate } from 'antd';
-import TrimText from '../../services/TrimText';
+import TrimText from '../../Services/TrimText';
 import TrimmedTitle from '../../services/TrimmedTitle';
 import './MovieCard.css';
 
@@ -48,7 +48,7 @@ export default class MovieCard extends Component {
 
     return (
       <li className="movieCard">
-        <img className="movieImg" src={imgSrc}/>
+        <img className="movieImg" src={imgSrc} />
         <div className="movieCardContent">
           <TrimmedTitle className="movieTitle" title={movieTitle} />
           <span className="releaseDate">{formattedDate}</span>
