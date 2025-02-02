@@ -4,13 +4,16 @@ export default class Movies {
 
   async getResource(url) {
     const separator = url.includes('?') ? '&' : '?';
-    const res = await fetch(
-      `${this.baseApi}${url}${separator}api_key=${this.token}`
-    );
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}, received ${res.status}`);
+    const fullUrl = `${this.baseApi}${url}${separator}api_key=${this.token}`;
+    const response = await fetch(fullUrl);
+
+    if (!response.ok) {
+      if (response.status === 404 && url.includes('/rated/movies')) {
+        return { results: [], total_pages: 1 };
+      }
+      throw new Error(`Could not fetch ${url}, received ${response.status}`);
     }
-    return res.json();
+    return response.json();
   }
 
   getMovie(id) {
