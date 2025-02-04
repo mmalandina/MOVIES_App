@@ -1,21 +1,19 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'antd';
 import './Searchbar.css';
 
-export default class Searchbar extends Component {
-  render() {
-    return (
-      <Input
-        type="search"
-        className="searchbar"
-        onChange={this.props.search}
-        placeholder="Type to search..."
-      />
-    );
-  }
-}
+const Searchbar = ({ value, onSearchChange }) => (
+  <Input
+    className="searchbar"
+    placeholder="Type to search..."
+    value={value}
+    onChange={onSearchChange}
+  />
+);
 
 Searchbar.propTypes = {
-  search: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  onSearchChange: PropTypes.func.isRequired,
 };
+
+export default Searchbar;

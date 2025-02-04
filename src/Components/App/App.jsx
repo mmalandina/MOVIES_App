@@ -5,6 +5,7 @@ import Header from '../Header';
 import Searchbar from '../Searchbar';
 import MovieList from '../MovieList';
 import MoviesService from '../../Services/MoviesService';
+import debounce from 'lodash.debounce';
 import './App.css';
 
 const { Content } = Layout;
@@ -25,6 +26,10 @@ export default class App extends Component {
   };
 
   moviesService = new MoviesService();
+
+  debouncedFetchMovies = debounce((query, page) => {
+    this.fetchMovies(query, page);
+  }, 500);
 
   componentDidMount() {
     const storedSession = localStorage.getItem('guestSessionId');
@@ -58,28 +63,18 @@ export default class App extends Component {
   }
 
   setActive = (activeKey) => {
-    this.setState(
-      {
-        activeTab: activeKey,
-        movies: [],
-        query: '',
-        selectedPage: 1,
-        pages: 0,
-      },
-      () => {
-        if (activeKey === 'rated') {
-          this.fetchRatedMovies();
-        }
+    this.setState({ activeTab: activeKey }, () => {
+      if (activeKey === 'rated') {
+        this.fetchRatedMovies(this.state.ratedPage);
       }
-    );
+    });
   };
 
   handleSearch = (e) => {
     const query = e.target.value;
-
     this.setState({ query, selectedPage: 1 }, () => {
       if (query.trim().length >= 2) {
-        this.fetchMovies(query, 1);
+        this.debouncedFetchMovies(query, 1);
       } else {
         this.setState({ movies: [], pages: 0 });
       }
@@ -87,12 +82,11 @@ export default class App extends Component {
   };
 
   fetchMovies = (query, page = 1) => {
-    this.setState({ loading: true });
     if (!query || query.trim().length < 2) {
       this.setState({ movies: [], pages: 1, selectedPage: 1 });
       return;
     }
-
+    this.setState({ loading: true });
     this.moviesService
       .searchMovies(query, page)
       .then((data) => {
@@ -103,7 +97,6 @@ export default class App extends Component {
             .getRatedMovies(this.state.guestSessionId, 1)
             .then((ratedData) => {
               const ratedMovies = ratedData.results || [];
-
               updatedMovies = updatedMovies.map((movie) => {
                 const ratedMovie = ratedMovies.find(
                   (rated) => rated.id === movie.id
@@ -113,7 +106,6 @@ export default class App extends Component {
                   userRating: ratedMovie ? ratedMovie.rating : null,
                 };
               });
-
               this.setState({
                 movies: updatedMovies,
                 pages: data.total_pages || 1,
@@ -123,6 +115,7 @@ export default class App extends Component {
             })
             .catch((error) => {
               console.error('Ошибка при загрузке оценённых фильмов:', error);
+              this.setState({ loading: false });
             });
         } else {
           this.setState({
@@ -146,12 +139,12 @@ export default class App extends Component {
 
   fetchRatedMovies = (page = 1) => {
     const { guestSessionId } = this.state;
-    this.setState({ loading: true });
     if (!guestSessionId) return;
+    this.setState({ loading: true });
     this.moviesService
       .getRatedMovies(guestSessionId, page)
       .then((data) => {
-        const ratedMovies = data.results.map((movie) => ({
+        const ratedMovies = (data.results || []).map((movie) => ({
           ...movie,
           userRating: movie.rating,
         }));
@@ -164,6 +157,7 @@ export default class App extends Component {
       })
       .catch((error) => {
         console.error('Ошибка при загрузке оценённых фильмов:', error);
+        this.setState({ loading: false });
       });
   };
 
@@ -191,13 +185,7 @@ export default class App extends Component {
       });
       this.setState({ movies: updatedMovies });
     } else if (activeTab === 'rated') {
-      const updatedRatedMovies = this.state.ratedMovies.map((movie) => {
-        if (movie.id === movieId) {
-          return { ...movie, userRating: newRating };
-        }
-        return movie;
-      });
-      this.setState({ ratedMovies: updatedRatedMovies });
+      this.fetchRatedMovies(this.state.ratedPage);
     }
   };
 
@@ -213,6 +201,7 @@ export default class App extends Component {
       ratedPages,
       guestSessionId,
       genres,
+      query,
     } = this.state;
 
     return (
@@ -226,7 +215,7 @@ export default class App extends Component {
           <Content className="appContent">
             {activeTab === 'search' && (
               <>
-                <Searchbar search={this.handleSearch} />
+                <Searchbar value={query} onSearchChange={this.handleSearch} />
                 <MovieList
                   movies={movies}
                   genres={genres}

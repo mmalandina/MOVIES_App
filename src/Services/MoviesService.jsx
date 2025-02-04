@@ -1,4 +1,4 @@
-export default class Movies {
+export default class MoviesService {
   baseApi = 'https://api.themoviedb.org/3';
   token = '94829e0daab30ab20f6e4ceb9c58c196';
 

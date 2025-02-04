@@ -37,7 +37,7 @@ export default class MovieCard extends Component {
     const shortDesc = TrimText(description, 170);
     const imgSrc = imgPath.startsWith('http')
       ? imgPath
-      : `https://image.tmdb.org/t/p/w500/${imgPath}`;
+      : `https://image.tmdb.org/t/p/w500${imgPath.startsWith('/') ? '' : '/'}${imgPath}`;
     const genresElement = genres
       .map((genreItem) => (
         <li key={genreItem.id} className="genresList__item">
@@ -48,7 +48,7 @@ export default class MovieCard extends Component {
 
     return (
       <li className="movieCard">
-        <img className="movieImg" src={imgSrc} />
+        <img className="movieImg" src={imgSrc} alt={movieTitle} />
         <div className="movieCardContent">
           <TrimmedTitle className="movieTitle" title={movieTitle} />
           <span className="releaseDate">{formattedDate}</span>
@@ -61,7 +61,7 @@ export default class MovieCard extends Component {
             className="ant-rate"
             onChange={this.handleRatingChange}
           />
-          <div className={`ratingCircle ${this.getRatingClass(rating)}`}>
+          <div className={`ratingCircle ${this.getRatingClass()}`}>
             {rating.toFixed(1)}
           </div>
         </div>
